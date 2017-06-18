@@ -1,4 +1,3 @@
-// 讓你可以動態插入 bundle 好的 .js 檔到 .index.html
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -7,7 +6,6 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body',
 });
 
-// entry 為進入點，output 為進行完 eslint、babel loader 轉譯後的檔案位置
 module.exports = {
   entry: [
     './src/index.js',
@@ -36,7 +34,6 @@ module.exports = {
     ],
   
   },
-  // 啟動開發測試用 server 設定（不能用在 production）
   devServer: {
     inline: true,
     port: 8008,
