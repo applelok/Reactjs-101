@@ -1,34 +1,37 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+class UserGithub extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          username: '',
+          githubtUrl: '',
+          avatarUrl: '',
+        }
+    }
+    componentDidMount() {
+        $.get(this.props.source, (result) => {
+            console.log(result);
+            const data = result;
+            if (data) {
+              this.setState({
+                    username: data.name,
+                    githubtUrl: data.html_url,
+                    avatarUrl: data.avatar_url
+              });
+            }
+        });
+    }
+    render() {
+        return (
+          <div>
+            <h3>{this.state.username}</h3>
+            <img src={this.state.avatarUrl} />
+            <a href={this.state.githubtUrl}>Github Link</a>.
+          </div>
+        );
+    }
+}
 
-// Functional Component 可以視為 f(d) => UI，根據傳進去的 props 繪出對應的 UI。注意這邊 props 是傳入函式的參數，因此取用 props 不用加 this
-const HelloMessage = (props) => (
-  <div>
-    <h1>Hello, {props.name}!</h1>
-  </div>
+ReactDOM.render(
+  <UserGithub source="https://api.github.com/users/torvalds" />,
+  document.getElementById('app')
 );
-
-// class HelloMessage extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//     };
-//   }
-//   render() {
-//     return (
-//       <div>
-//         <h1>Hello, {this.props.name}!</h1>
-//       </div>
-//     );
-//   }
-// }
-
-HelloMessage.propTypes = {
-  name: React.PropTypes.string,
-}
-
-HelloMessage.defaultProps = {
- name: 'Zuck',
-}
-
-ReactDOM.render(<HelloMessage />, document.getElementById('app'));
