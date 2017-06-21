@@ -1,21 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import TodoHeader from './components/TodoHeader';
-import TodoList from './components/TodoList';
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import todoApp from './reducers'
+import App from './components/App'
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return (
-      <div>
-        <TodoHeader />
-        <TodoList />
-      </div>
-    );
-  }
-}
+let store = createStore(todoApp)
 
-ReactDOM.render(<App />, document.getElementById('app'));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
